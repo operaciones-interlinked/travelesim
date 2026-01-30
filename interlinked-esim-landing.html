@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interlinked Travel eSIM API Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 120px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0.95;
+        }
+
+        .hero .cta {
+            display: inline-block;
+            background: white;
+            color: #dc2626;
+            padding: 16px 48px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .hero .cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section {
+            margin-bottom: 100px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 48px;
+            max-width: 700px;
+        }
+
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .stat-card {
+            background: #f9fafb;
+            padding: 32px;
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .value-props {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .value-card:hover {
+            border-color: #dc2626;
+            transform: translateY(-4px);
+        }
+
+        .value-icon {
+            width: 64px;
+            height: 64px;
+            background: #dc2626;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 2rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .value-card p {
+            color: #666;
+            font-size: 1.05rem;
+        }
+
+        .integration-models {
+            background: #f9fafb;
+            padding: 80px 20px;
+            margin: 0 -20px;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 48px auto 0;
+            padding: 0 20px;
+        }
+
+        .model-card {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 3px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .model-card:hover {
+            border-color: #dc2626;
+            box-shadow: 0 12px 24px rgba(220, 38, 38, 0.15);
+        }
+
+        .model-badge {
+            display: inline-block;
+            background: #dc2626;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .model-card h3 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+
+        .model-card .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .model-features {
+            list-style: none;
+        }
+
+        .model-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1a1a1a;
+            font-size: 1.05rem;
+        }
+
+        .model-features li:last-child {
+            border-bottom: none;
+        }
+
+        .model-features li::before {
+            content: "✓";
+            color: #dc2626;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .feature-box h4 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-icon {
+            color: #dc2626;
+            font-size: 1.5rem;
+        }
+
+        .feature-box p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .use-cases {
+            background: #1a1a1a;
+            color: white;
+            padding: 80px 20px;
+            margin: 0 -20px;
+        }
+
+        .use-cases .section-title {
+            color: white;
+        }
+
+        .use-cases .section-subtitle {
+            color: #d1d5db;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 48px auto 0;
+            padding: 0 20px;
+        }
+
+        .case-card {
+            background: #262626;
+            padding: 40px;
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+        }
+
+        .case-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .case-card p {
+            color: #d1d5db;
+            font-size: 1.05rem;
+            margin-bottom: 24px;
+        }
+
+        .case-tag {
+            display: inline-block;
+            background: #dc2626;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            margin: 0 -20px;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 18px 48px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+        }
+
+        .cta-button.primary {
+            background: white;
+            color: #dc2626;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .models-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>Interlinked Travel eSIM API Platform</h1>
+        <p>Launch your Travel eSIM marketplace in weeks, not months. Flexible integration, global coverage, your brand.</p>
+        <a href="#integration" class="cta">Explore Integration Models</a>
+    </section>
+
+    <div class="container">
+        <section class="section">
+            <h2 class="section-title">The Travel eSIM Market Opportunity</h2>
+            <p class="section-subtitle">The global Travel eSIM market is exploding. Travelers, remote workers, and digital nomads are driving unprecedented demand for flexible connectivity solutions.</p>
+            
+            <div class="market-stats">
+                <div class="stat-card">
+                    <div class="stat-number">$16B+</div>
+                    <div class="stat-label">Global Travel eSIM market by 2027</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45%</div>
+                    <div class="stat-label">Annual growth rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">258</div>
+                    <div class="stat-label">Destinations covered</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Why Interlinked?</h2>
+            <p class="section-subtitle">The fastest path from concept to live Travel eSIM marketplace. We handle the complexity, you own the customer experience.</p>
+            
+            <div class="value-props">
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <h3>Rapid Time-to-Market</h3>
+                    <p>Launch in weeks with our production-ready API. No infrastructure headaches, no carrier negotiations.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔧</div>
+                    <h3>Ultimate Flexibility</h3>
+                    <p>Choose your integration model. Use our user management or yours. Use our payments or yours. Your choice.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌍</div>
+                    <h3>Global Coverage</h3>
+                    <p>258 destinations, 23,000+ data plans, local and regional packages. One API, worldwide connectivity.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="integration-models" id="integration">
+        <h2 class="section-title" style="text-align: center;">Integration Models</h2>
+        <p class="section-subtitle" style="text-align: center; margin: 0 auto;">Choose the model that fits your business. Switch anytime as you scale.</p>
+        
+        <div class="models-grid">
+            <div class="model-card">
+                <span class="model-badge">MODEL B</span>
+                <h3>Managed Users</h3>
+                <p class="subtitle">Perfect for faster time-to-market with secure user management handled for you</p>
+                <ul class="model-features">
+                    <li>Your custom UI/UX</li>
+                    <li>Our user authentication & management</li>
+                    <li>Your payment gateway OR recommended payment gateway</li>
+                    <li>Full white-label capabilities</li>
+                    <li>Instant account recovery & security</li>
+                </ul>
+            </div>
+
+            <div class="model-card">
+                <span class="model-badge">MODEL C</span>
+                <h3>Full Control</h3>
+                <p class="subtitle">For complete ownership of the customer relationship and existing user ecosystems</p>
+                <ul class="model-features">
+                    <li>Your entire user ecosystem</li>
+                    <li>Your payment processing</li>
+                    <li>Server-to-server integration</li>
+                    <li>Pre-paid balance system</li>
+                    <li>Map eSIMs to your users internally</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="section">
+            <h2 class="section-title">Complete Product Features</h2>
+            <p class="section-subtitle">Everything you need to run a world-class Travel eSIM business</p>
+            
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h4><span class="feature-icon">📦</span> Global Package Catalog</h4>
+                    <p>23,000+ data plans across 258 destinations. Local, regional, and global packages with real-time availability.</p>
+                </div>
+                <div class="feature-box">
+                    <h4><span class="feature-icon">📋</span> Diverse Plan Types</h4>
+                    <p>Fixed data packages, unlimited data plans, plans with calls & SMS, international roaming packages, and local network services. Options for every use case.</p>
+                </div>
+                <div class="feature-box">
+                    <h4><span class="feature-icon">🏢</span> Multi-Tenant Architecture</h4>
+                    <p>Complete white-label support. Custom pricing, branding, and currency per tenant. Perfect for resellers.</p>
+                </div>
+                <div class="feature-box">
+                    <h4><span class="feature-icon">📱</span> Complete eSIM Lifecycle</h4>
+                    <p>Instant provisioning, QR codes, activation codes, iOS quick install links. Full lifecycle management.</p>
+                </div>
+                <div class="feature-box">
+                    <h4><span class="feature-icon">🔄</span> Package Top-ups</h4>
+                    <p>Top-up eligible eSIMs with additional data packages. Flexible reload options where supported.</p>
+                </div>
+                <div class="feature-box">
+                    <h4><span class="feature-icon">📊</span> Real-Time Usage Tracking</h4>
+                    <p>Live data consumption monitoring. Keep users informed with accurate, up-to-the-minute usage data.</p>
+                </div>
+                <div class="feature-box">
+                    <h4><span class="feature-icon">💳</span> Flexible Payments</h4>
+                    <p>Pre-paid balance system or recommended payment gateway integration. Support for multiple currencies and exchange rates.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="use-cases">
+        <h2 class="section-title" style="text-align: center;">Built For Your Use Case</h2>
+        <p class="section-subtitle" style="text-align: center; margin: 0 auto;">From telcos to travel platforms, our API adapts to your business model</p>
+        
+        <div class="cases-grid">
+            <div class="case-card">
+                <h4>🌐 MVNOs & Telcos</h4>
+                <p>Expand your service portfolio with instant Travel eSIM capabilities. Serve travelers without building infrastructure.</p>
+                <span class="case-tag">Multi-tenant</span>
+                <span class="case-tag">White-label</span>
+            </div>
+            <div class="case-card">
+                <h4>✈️ Travel Platforms</h4>
+                <p>Add connectivity as a revenue stream. Seamless integration with your existing booking and customer flows.</p>
+                <span class="case-tag">API-first</span>
+                <span class="case-tag">Global coverage</span>
+            </div>
+            <div class="case-card">
+                <h4>🏪 Marketplaces</h4>
+                <p>Launch your Travel eSIM marketplace with your brand, your users, your payment methods. Complete control.</p>
+                <span class="case-tag">Flexible integration</span>
+                <span class="case-tag">Your brand</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Ready to Launch Your Travel eSIM Business?</h2>
+        <p>Let's discuss which integration model fits your needs and get you started</p>
+        <div class="cta-buttons">
+            <a href="mailto:od@interlinked.mx" class="cta-button primary">Schedule a Demo</a>
+            <a href="./interlinked-api-docs.html" class="cta-button secondary">View Documentation</a>
+        </div>
+    </section>
+</body>
+</html>

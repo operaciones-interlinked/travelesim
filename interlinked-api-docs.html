@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interlinked Travel eSIM API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #f7f9fa;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #1a1a1a;
+            color: white;
+            padding: 32px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid #333;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #dc2626;
+        }
+
+        .sidebar-header .version {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .nav-section {
+            margin-top: 24px;
+        }
+
+        .nav-section-title {
+            padding: 8px 24px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #888;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 10px 24px;
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: #262626;
+            color: white;
+            border-left-color: #dc2626;
+        }
+
+        .nav-link.active {
+            background: #262626;
+            color: white;
+            border-left-color: #dc2626;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 48px 64px;
+            max-width: 1200px;
+        }
+
+        .header {
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .base-url {
+            background: #f0f0f0;
+            border-left: 4px solid #dc2626;
+            padding: 16px 20px;
+            margin: 32px 0;
+            border-radius: 4px;
+        }
+
+        .base-url strong {
+            color: #dc2626;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .base-url code {
+            display: block;
+            margin-top: 8px;
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .section {
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .endpoint-card {
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 48px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .endpoint-header {
+            margin-bottom: 24px;
+        }
+
+        .endpoint-method {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-right: 12px;
+        }
+
+        .method-get {
+            background: #10b981;
+            color: white;
+        }
+
+        .method-post {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .endpoint-path {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #1a1a1a;
+        }
+
+        .endpoint-description {
+            margin-top: 16px;
+            font-size: 1.05rem;
+            color: #666;
+        }
+
+        .subsection {
+            margin: 24px 0;
+        }
+
+        .subsection-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #d1d5db;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .code-block .key {
+            color: #60a5fa;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        .code-block .number {
+            color: #f59e0b;
+        }
+
+        .code-block .comment {
+            color: #888;
+        }
+
+        .param-list {
+            list-style: none;
+        }
+
+        .param-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .param-list li:last-child {
+            border-bottom: none;
+        }
+
+        .param-name {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-weight: 600;
+            color: #dc2626;
+        }
+
+        .param-type {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: #f9fafb;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a1a1a;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.95rem;
+        }
+
+        td code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .note strong {
+            color: #92400e;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box strong {
+            color: #1e40af;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .main-content {
+                margin-left: 240px;
+                padding: 32px 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 24px 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>Interlinked API</h1>
+                <div class="version">Travel eSIM Platform</div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Getting Started</div>
+                <a href="#overview" class="nav-link">API Overview</a>
+                <a href="#base-url" class="nav-link">Base URL</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Authentication</div>
+                <a href="#register" class="nav-link">Register User</a>
+                <a href="#login" class="nav-link">Login</a>
+                <a href="#password-recovery" class="nav-link">Password Recovery</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Catalog</div>
+                <a href="#countries" class="nav-link">Get Countries</a>
+                <a href="#packages" class="nav-link">Get Packages</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Transactions</div>
+                <a href="#transaction-gateway" class="nav-link">Payment Gateway</a>
+                <a href="#transaction-balance" class="nav-link">Balance Payment</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">eSIM Management</div>
+                <a href="#get-esims" class="nav-link">Get User eSIMs</a>
+                <a href="#activate-esim" class="nav-link">Activate eSIM</a>
+                <a href="#esim-usage" class="nav-link">Get eSIM Usage</a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>API Documentation</h1>
+                <p>Complete reference for integrating Interlinked Travel eSIM Platform</p>
+            </div>
+
+            <div class="base-url" id="base-url">
+                <strong>Base URL</strong>
+                <code>https://stage.pangeamovil.com</code>
+            </div>
+
+            <section class="section" id="overview">
+                <h2 class="section-title">API Overview</h2>
+                <p style="font-size: 1.05rem; color: #666; margin-bottom: 24px;">
+                    The Interlinked Travel eSIM API provides a complete multi-tenant platform for managing eSIM sales, 
+                    user authentication, and device activation. All endpoints return JSON responses and require proper authentication headers.
+                </p>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Endpoint</th>
+                                <th>Description</th>
+                                <th>Headers Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="method-get" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">GET</span></td>
+                                <td><code>/api/countries</code></td>
+                                <td>Get available countries</td>
+                                <td>Public</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-get" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">GET</span></td>
+                                <td><code>/api/tenant/packages</code></td>
+                                <td>Get tenant packages</td>
+                                <td>X-Tenant-API-Key</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-post" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">POST</span></td>
+                                <td><code>/api/auth/local/register</code></td>
+                                <td>Register new user</td>
+                                <td>X-Tenant-API-Key</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-post" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">POST</span></td>
+                                <td><code>/api/auth/local</code></td>
+                                <td>User login</td>
+                                <td>Public</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-post" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">POST</span></td>
+                                <td><code>/api/auth/forgot-password</code></td>
+                                <td>Request password reset</td>
+                                <td>Public</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-post" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">POST</span></td>
+                                <td><code>/api/transactions</code></td>
+                                <td>Create transaction</td>
+                                <td>Authorization + X-Tenant-API-Key</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-get" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">GET</span></td>
+                                <td><code>/api/esims</code></td>
+                                <td>Get user eSIMs</td>
+                                <td>Authorization</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-post" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">POST</span></td>
+                                <td><code>/api/esim/activate</code></td>
+                                <td>Activate eSIM</td>
+                                <td>Authorization</td>
+                            </tr>
+                            <tr>
+                                <td><span class="method-get" style="padding: 4px 8px; border-radius: 3px; font-size: 0.8rem;">GET</span></td>
+                                <td><code>/api/esim/usage/:esim_id</code></td>
+                                <td>Get eSIM usage data</td>
+                                <td>Authorization</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="section" id="register">
+                <h2 class="section-title">1. Register User</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-post">POST</span>
+                            <span class="endpoint-path">/api/auth/local/register</span>
+                        </div>
+                        <p class="endpoint-description">Create a new user account associated with your tenant.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">Content-Type: application/json
+X-Tenant-API-Key: string (required)</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Request Body</h3>
+                        <div class="code-block">{
+  <span class="key">"username"</span>: <span class="string">"string"</span>,      <span class="comment">// required, unique</span>
+  <span class="key">"email"</span>: <span class="string">"string"</span>,          <span class="comment">// required, valid email format</span>
+  <span class="key">"password"</span>: <span class="string">"string"</span>        <span class="comment">// required, minimum 8 characters</span>
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Data Types</h3>
+                        <ul class="param-list">
+                            <li><span class="param-name">username</span>: <span class="param-type">string (alphanumeric, 3-50 characters)</span></li>
+                            <li><span class="param-name">email</span>: <span class="param-type">string (RFC 5322 email format)</span></li>
+                            <li><span class="param-name">password</span>: <span class="param-type">string (minimum 8 characters)</span></li>
+                            <li><span class="param-name">X-Tenant-API-Key</span>: <span class="param-type">string</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"jwt"</span>: <span class="string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>,
+  <span class="key">"user"</span>: {
+    <span class="key">"id"</span>: <span class="number">29</span>,
+    <span class="key">"documentId"</span>: <span class="string">"mtaeqghy9571m2z6r81a1g1m"</span>,
+    <span class="key">"username"</span>: <span class="string">"gkl2"</span>,
+    <span class="key">"email"</span>: <span class="string">"gkl2@gkl.de"</span>,
+    <span class="key">"provider"</span>: <span class="string">"local"</span>,
+    <span class="key">"confirmed"</span>: <span class="number">true</span>,
+    <span class="key">"blocked"</span>: <span class="number">false</span>,
+    <span class="key">"tenant"</span>: {
+      <span class="key">"id"</span>: <span class="number">15</span>,
+      <span class="key">"code"</span>: <span class="string">"testcorp"</span>,
+      <span class="key">"name"</span>: <span class="string">"TestCorp Company"</span>
+    }
+  }
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Error Response (400)</h3>
+                        <div class="code-block">{
+  <span class="key">"error"</span>: {
+    <span class="key">"status"</span>: <span class="number">400</span>,
+    <span class="key">"name"</span>: <span class="string">"ValidationError"</span>,
+    <span class="key">"message"</span>: <span class="string">"string"</span>,
+    <span class="key">"details"</span>: {}
+  }
+}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="login">
+                <h2 class="section-title">2. Login</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-post">POST</span>
+                            <span class="endpoint-path">/api/auth/local</span>
+                        </div>
+                        <p class="endpoint-description">Authenticate an existing user and receive a JWT token.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">Content-Type: application/json</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Request Body</h3>
+                        <div class="code-block">{
+  <span class="key">"identifier"</span>: <span class="string">"string"</span>,    <span class="comment">// email or username</span>
+  <span class="key">"password"</span>: <span class="string">"string"</span>
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"jwt"</span>: <span class="string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>,
+  <span class="key">"user"</span>: {
+    <span class="key">"id"</span>: <span class="number">1</span>,
+    <span class="key">"username"</span>: <span class="string">"gkl"</span>,
+    <span class="key">"email"</span>: <span class="string">"gkl@gkl.de"</span>,
+    <span class="key">"confirmed"</span>: <span class="number">true</span>
+  }
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Error Response (400)</h3>
+                        <div class="code-block">{
+  <span class="key">"error"</span>: {
+    <span class="key">"status"</span>: <span class="number">400</span>,
+    <span class="key">"name"</span>: <span class="string">"ValidationError"</span>,
+    <span class="key">"message"</span>: <span class="string">"Identifier or password invalid"</span>
+  }
+}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="password-recovery">
+                <h2 class="section-title">3. Password Recovery</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-post">POST</span>
+                            <span class="endpoint-path">/api/auth/forgot-password</span>
+                        </div>
+                        <p class="endpoint-description">Request a password reset email for a registered user.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Request Body</h3>
+                        <div class="code-block">{
+  <span class="key">"email"</span>: <span class="string">"string"</span>          <span class="comment">// registered email</span>
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"ok"</span>: <span class="number">true</span>
+}</div>
+                    </div>
+
+                    <div class="note">
+                        <strong>Note:</strong> PANGEA sends a password reset email with a landing page link to complete the process.
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="countries">
+                <h2 class="section-title">4. Get Countries</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-get">GET</span>
+                            <span class="endpoint-path">/api/countries</span>
+                        </div>
+                        <p class="endpoint-description">Retrieve list of available countries and regions with package coverage.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Headers</h3>
+                        <p style="color: #666;">No authentication required (public endpoint)</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Query Parameters</h3>
+                        <ul class="param-list">
+                            <li><span class="param-name">geography</span>: <span class="param-type">Filter by geography (local, regional, global)</span></li>
+                            <li><span class="param-name">region</span>: <span class="param-type">Filter by region (Europe, Asia, etc.)</span></li>
+                            <li><span class="param-name">search</span>: <span class="param-type">Search by country name or code</span></li>
+                            <li><span class="param-name">country_code</span>: <span class="param-type">Filter by specific country code (ES, US, etc.)</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Example Requests</h3>
+                        <div class="code-block">GET /api/countries?geography=regional
+GET /api/countries?region=Europe
+GET /api/countries?search=Spain
+GET /api/countries?country_code=ES
+GET /api/countries?region=Europe&geography=local</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="number">214</span>,
+      <span class="key">"country_code"</span>: <span class="string">"ES"</span>,
+      <span class="key">"country_name"</span>: <span class="string">"Spain"</span>,
+      <span class="key">"region"</span>: <span class="string">"Europe"</span>,
+      <span class="key">"image_url"</span>: <span class="string">"https://flagcdn.com/w320/es.png"</span>,
+      <span class="key">"geography"</span>: <span class="string">"local"</span>,
+      <span class="key">"currencies"</span>: {
+        <span class="key">"EUR"</span>: {
+          <span class="key">"name"</span>: <span class="string">"Euro"</span>,
+          <span class="key">"symbol"</span>: <span class="string">"€"</span>
+        }
+      }
+    }
+  ],
+  <span class="key">"meta"</span>: {
+    <span class="key">"total"</span>: <span class="number">1</span>
+  }
+}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="packages">
+                <h2 class="section-title">5. Get Tenant Packages</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-get">GET</span>
+                            <span class="endpoint-path">/api/tenant/packages</span>
+                        </div>
+                        <p class="endpoint-description">Retrieve available data packages for your tenant with dynamic pricing and currency conversion.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">X-Tenant-API-Key: string (required)</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Query Parameters</h3>
+                        <ul class="param-list">
+                            <li><span class="param-name">country</span>: <span class="param-type">Filter packages by specific country (e.g., "Spain", "Israel")</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Example Requests</h3>
+                        <div class="code-block">GET /api/tenant/packages?country=Israel
+GET /api/tenant/packages?country=Spain
+GET /api/tenant/packages  # All countries</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="number">9050</span>,
+      <span class="key">"package_id"</span>: <span class="string">"esim-spain-15days-ungb-all"</span>,
+      <span class="key">"package"</span>: <span class="string">"Unlimited Data - 15 Days"</span>,
+      <span class="key">"validity_days"</span>: <span class="number">15</span>,
+      <span class="key">"price_public"</span>: <span class="number">32.32</span>,
+      <span class="key">"dataAmount"</span>: <span class="string">"9007199254740991"</span>,
+      <span class="key">"dataUnit"</span>: <span class="string">"MB"</span>,
+      <span class="key">"withSMS"</span>: <span class="number">false</span>,
+      <span class="key">"withCall"</span>: <span class="number">false</span>,
+      <span class="key">"withHotspot"</span>: <span class="number">true</span>,
+      <span class="key">"country_name"</span>: <span class="string">"Spain"</span>,
+      <span class="key">"country_region"</span>: <span class="string">"Europe"</span>,
+      <span class="key">"geography"</span>: <span class="string">"local"</span>,
+      <span class="key">"coverage"</span>: [<span class="string">"ES"</span>],
+      <span class="key">"currency"</span>: <span class="string">"MXN"</span>,
+      <span class="key">"exchange_rate"</span>: <span class="number">18.47</span>
+    }
+  ],
+  <span class="key">"meta"</span>: {
+    <span class="key">"tenant_code"</span>: <span class="string">"tenantCode"</span>,
+    <span class="key">"currency"</span>: <span class="string">"MXN"</span>,
+    <span class="key">"total_packages"</span>: <span class="number">160</span>,
+    <span class="key">"exchange_rate"</span>: <span class="number">18.47</span>
+  }
+}</div>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Pricing:</strong> Prices are dynamically calculated with tenant markups and converted to the tenant's currency. Exchange rates are applied automatically for non-USD currencies.
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="transaction-gateway">
+                <h2 class="section-title">6.A Create Transaction (Payment Gateway)</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-post">POST</span>
+                            <span class="endpoint-path">/api/transactions</span>
+                        </div>
+                        <p class="endpoint-description">Create a transaction using an integrated payment gateway (e.g., Stripe). Returns a client secret for payment confirmation.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">Content-Type: application/json
+Authorization: Bearer {jwt_token}
+X-Tenant-API-Key: string (required)</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Request Body</h3>
+                        <div class="code-block">{
+  <span class="key">"amount"</span>: <span class="number">500</span>,
+  <span class="key">"currency"</span>: <span class="string">"usd"</span>,
+  <span class="key">"package_id"</span>: <span class="string">"esim-africa-3days-1gb-all"</span>,
+  <span class="key">"payment_method"</span>: <span class="string">"stripe"</span>
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"clientSecret"</span>: <span class="string">"pi_3SJH6aRJC2fhvSRI1y0zDOFn_secret_..."</span>,
+  <span class="key">"paymentIntentId"</span>: <span class="string">"pi_3SJH6aRJC2fhvSRI1y0zDOFn"</span>,
+  <span class="key">"payment_method"</span>: <span class="string">"stripe"</span>
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Payment Flow</h3>
+                        <ol style="list-style-position: inside; color: #666; line-height: 2;">
+                            <li>Frontend uses <code>clientSecret</code> to confirm payment with payment gateway</li>
+                            <li>User enters card details in payment gateway UI</li>
+                            <li>Payment gateway processes the payment</li>
+                            <li>Upon success, payment gateway sends webhook to PANGEA</li>
+                            <li>Webhook updates transaction status to "succeeded"</li>
+                            <li><strong>PANGEA creates eSIM and assigns it to the user</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="transaction-balance">
+                <h2 class="section-title">6.B Create Transaction (Balance)</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-post">POST</span>
+                            <span class="endpoint-path">/api/transactions</span>
+                        </div>
+                        <p class="endpoint-description">Create a transaction using pre-paid tenant balance. eSIM is created immediately if balance is sufficient.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Request Body</h3>
+                        <div class="code-block">{
+  <span class="key">"amount"</span>: <span class="number">500</span>,
+  <span class="key">"currency"</span>: <span class="string">"usd"</span>,
+  <span class="key">"package_id"</span>: <span class="string">"esim-africa-3days-1gb-all"</span>,
+  <span class="key">"payment_method"</span>: <span class="string">"balance"</span>
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="number">79</span>,
+    <span class="key">"status"</span>: <span class="string">"succeeded"</span>,
+    <span class="key">"amount"</span>: <span class="number">124.2</span>,
+    <span class="key">"currency"</span>: <span class="string">"mxn"</span>,
+    <span class="key">"payment_method"</span>: <span class="string">"balance"</span>,
+    <span class="key">"package_name"</span>: <span class="string">"Mexico - 20 GB - 30 Days"</span>,
+    <span class="key">"esim_id"</span>: <span class="number">38</span>,
+    <span class="key">"new_balance"</span>: <span class="number">9875.8</span>
+  }
+}</div>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Immediate Creation:</strong> When using balance payment, the eSIM is created and assigned immediately upon successful transaction. No webhook is required.
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="get-esims">
+                <h2 class="section-title">7. Get User eSIMs</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-get">GET</span>
+                            <span class="endpoint-path">/api/esims</span>
+                        </div>
+                        <p class="endpoint-description">Retrieve all eSIMs associated with the authenticated user.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">Authorization: Bearer {jwt_token}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="number">33</span>,
+      <span class="key">"esim_id"</span>: <span class="string">"27ba193c-41d1-43f0-a20e-d2bca6c68324"</span>,
+      <span class="key">"esim_status"</span>: <span class="string">"READY FOR ACTIVATION"</span>,
+      <span class="key">"package_name"</span>: <span class="string">"Africa - 1 GB - 3 Days"</span>,
+      <span class="key">"package_id"</span>: <span class="string">"esim-africa-3days-1gb-all"</span>,
+      <span class="key">"coverage"</span>: [<span class="string">"DZ"</span>, <span class="string">"EG"</span>, <span class="string">"KE"</span>, <span class="string">"MA"</span>, <span class="string">"NG"</span>, <span class="string">"TZ"</span>],
+      <span class="key">"user_email"</span>: <span class="string">"gkl@gkl.de"</span>,
+      <span class="key">"iccid"</span>: <span class="number">null</span>,
+      <span class="key">"activation_date"</span>: <span class="number">null</span>,
+      <span class="key">"expiration_date"</span>: <span class="number">null</span>
+    }
+  ],
+  <span class="key">"meta"</span>: {
+    <span class="key">"pagination"</span>: {
+      <span class="key">"total"</span>: <span class="number">1</span>
+    }
+  }
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">eSIM Status Values</h3>
+                        <ul class="param-list">
+                            <li><span class="param-name">READY FOR ACTIVATION</span>: <span class="param-type">eSIM created but not yet activated</span></li>
+                            <li><span class="param-name">INSTALLED</span>: <span class="param-type">eSIM activated and in use</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="activate-esim">
+                <h2 class="section-title">8. Activate eSIM</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-post">POST</span>
+                            <span class="endpoint-path">/api/esim/activate</span>
+                        </div>
+                        <p class="endpoint-description">Activate an eSIM and receive QR code, LPA code, and installation links.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">Content-Type: application/json
+Authorization: Bearer {jwt_token}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Request Body</h3>
+                        <div class="code-block">{
+  <span class="key">"esim_id"</span>: <span class="string">"27ba193c-41d1-43f0-a20e-d2bca6c68324"</span>  <span class="comment">// UUID v4</span>
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"success"</span>: <span class="number">true</span>,
+  <span class="key">"esim"</span>: {
+    <span class="key">"id"</span>: <span class="number">33</span>,
+    <span class="key">"esim_id"</span>: <span class="string">"27ba193c-41d1-43f0-a20e-d2bca6c68324"</span>,
+    <span class="key">"iccid"</span>: <span class="string">"8935302501665634"</span>,
+    <span class="key">"esim_status"</span>: <span class="string">"INSTALLED"</span>,
+    <span class="key">"activation_date"</span>: <span class="string">"2025-10-17T17:08:45.000Z"</span>,
+    <span class="key">"package_name"</span>: <span class="string">"Africa - 1 GB - 3 Days"</span>,
+    <span class="key">"number"</span>: <span class="string">"6641698376"</span>,
+    <span class="key">"expiration_date"</span>: <span class="string">"2026-10-17T19:09:14.000Z"</span>,
+    <span class="key">"qr_code_url"</span>: <span class="string">"https://imagedelivery.net/..."</span>,
+    <span class="key">"lpa_code"</span>: <span class="string">"LPA:1$lpa.pangea.com$ESIM"</span>,
+    <span class="key">"smdp_address"</span>: <span class="string">"lpa.pangea.com"</span>,
+    <span class="key">"activation_code"</span>: <span class="string">"ESIM"</span>,
+    <span class="key">"ios_quick_install"</span>: <span class="string">"https://esimsetup.apple.com/..."</span>
+  }
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Error Responses</h3>
+                        <div class="code-block"><span class="comment">// 400 - Already Active</span>
+{
+  <span class="key">"error"</span>: {
+    <span class="key">"status"</span>: <span class="number">400</span>,
+    <span class="key">"name"</span>: <span class="string">"ValidationError"</span>,
+    <span class="key">"message"</span>: <span class="string">"eSIM is already active"</span>
+  }
+}
+
+<span class="comment">// 404 - Not Found</span>
+{
+  <span class="key">"error"</span>: {
+    <span class="key">"status"</span>: <span class="number">404</span>,
+    <span class="key">"name"</span>: <span class="string">"NotFoundError"</span>,
+    <span class="key">"message"</span>: <span class="string">"eSIM not found"</span>
+  }
+}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="esim-usage">
+                <h2 class="section-title">9. Get eSIM Usage</h2>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <div>
+                            <span class="endpoint-method method-get">GET</span>
+                            <span class="endpoint-path">/api/esim/usage/:esim_id</span>
+                        </div>
+                        <p class="endpoint-description">Retrieve real-time data usage information for an active eSIM.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Headers</h3>
+                        <div class="code-block">Authorization: Bearer {jwt_token}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Path Parameters</h3>
+                        <ul class="param-list">
+                            <li><span class="param-name">esim_id</span>: <span class="param-type">string (UUID v4, required)</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Success Response (200)</h3>
+                        <div class="code-block">{
+  <span class="key">"esim_id"</span>: <span class="string">"27ba193c-41d1-43f0-a20e-d2bca6c68324"</span>,
+  <span class="key">"iccid"</span>: <span class="string">"8935302501665634"</span>,
+  <span class="key">"package_name"</span>: <span class="string">"Africa - 1 GB - 3 Days"</span>,
+  <span class="key">"usage"</span>: {
+    <span class="key">"status"</span>: <span class="string">"success"</span>,
+    <span class="key">"data"</span>: {
+      <span class="key">"iccid"</span>: <span class="string">"8935302501665634"</span>,
+      <span class="key">"status"</span>: <span class="string">"ACTIVATED"</span>,
+      <span class="key">"startedAt"</span>: <span class="number">1760728504</span>,
+      <span class="key">"expiredAt"</span>: <span class="number">1792264504</span>,
+      <span class="key">"allowedData"</span>: <span class="number">1024</span>,  <span class="comment">// MB</span>
+      <span class="key">"remainingData"</span>: <span class="number">473</span>,  <span class="comment">// MB</span>
+      <span class="key">"allowedSms"</span>: <span class="number">0</span>,
+      <span class="key">"remainingSms"</span>: <span class="number">0</span>,
+      <span class="key">"allowedVoice"</span>: <span class="number">0</span>,
+      <span class="key">"remainingVoice"</span>: <span class="number">0</span>
+    }
+  }
+}</div>
+                    </div>
+
+                    <div class="subsection">
+                        <h3 class="subsection-title">Error Response (404)</h3>
+                        <div class="code-block">{
+  <span class="key">"error"</span>: {
+    <span class="key">"status"</span>: <span class="number">404</span>,
+    <span class="key">"name"</span>: <span class="string">"NotFoundError"</span>,
+    <span class="key">"message"</span>: <span class="string">"eSIM not found"</span>
+  }
+}</div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active state
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Highlight active section on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
